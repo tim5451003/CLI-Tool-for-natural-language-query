@@ -26,6 +26,18 @@ python wikidata_cli.py "cities in japan" --json
 python wikidata_cli.py "what is python" --json
 ```
 
+## Module Map
+
+- `cli.py`: 主流程與 CLI 參數
+- `parser.py`: 自然語言解析（NL -> ParsedQuery）
+- `intents.py`: `ParsedQuery` 與常數（entity/property 映射）
+- `resolver.py`: Wikidata entity resolution
+- `sparql_builder.py`: SPARQL 模板生成
+- `wikidata_client.py`: SPARQL 執行與結果正規化
+- `formatter.py`: CLI 輸出格式化
+- `logging_utils.py`: JSON-lines logging 工具
+- `wikidata_cli.py`: 相容入口（呼叫 `cli.main()`）
+
 ## What baseline supports now
 
 - Intents:
