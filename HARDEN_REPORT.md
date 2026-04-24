@@ -37,6 +37,14 @@ This phase addresses the highest-severity issues from `BREAK_IT_REPORT.md` and `
 - **Multilingual coverage** is intentionally small (baseline vocabulary only).  
 - **Confidence scores** are implicit via resolver ranking thresholds, not yet exposed as numeric fields in JSON output.
 
+## Requirement 4 Explain Reference
+
+Detailed technical explanation for fundamentally hard remaining failures is documented in `README.md` under:
+
+- `Explain: Why remaining failures are fundamentally hard`
+
+This section covers ambiguity, ontology mismatch, compositional query complexity, multilingual uncertainty, and temporal/context limits, and explains why safe rejection/clarification is preferred over silent guessing.
+
 ## Suggested Re-test Commands
 
 ```bash

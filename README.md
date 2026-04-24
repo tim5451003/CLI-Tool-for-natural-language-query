@@ -77,10 +77,38 @@ python wikidata_cli.py "what is python" --json
 - JSON-lines logging in `wdq.log` (raw input, parsed intent, resolved entities, query, result)
 - Human-readable output and JSON output
 
-## Known baseline limitations (to be hardened in next step)
+## Explain: Why remaining failures are fundamentally hard
 
-- Mostly English phrasing patterns
-- Ambiguity is only signaled, not interactively clarified
-- No typo correction
-- No multi-constraint parsing (e.g., "capital and population of ...")
-- No confidence score or clarification loop
+This section explains the unresolved failure cases after hardening and why they are difficult in principle (not just missing engineering work).
+
+1. **Open-world ambiguity is intrinsic (not fully eliminable)**  
+   - Example: `Georgia` can mean a country or a U.S. state; `Washington` can refer to a state, D.C., people, or places.  
+   - Even with better ranking, surface text often lacks enough information to select one meaning deterministically.  
+   - Fundamental issue: user intent is under-specified relative to Wikidata's many valid entities sharing similar labels.
+
+2. **Ontology mismatch between human language and Wikidata schema**  
+   - Users ask with vague concepts like "best", "high GDP", or "biggest", while SPARQL templates need explicit property IDs, thresholds, sort directions, and scope.  
+   - Fundamental issue: natural concepts do not always map 1:1 to a single Wikidata property or query operator.
+
+3. **Compositional and comparative logic quickly exceeds template complexity**  
+   - Example: "countries with higher population than France but lower GDP than Japan".  
+   - This requires multi-entity binding, cross-property constraints, and careful semantic composition.  
+   - Fundamental issue: rule templates scale poorly for deeply nested constraints without introducing many false parses.
+
+4. **Multilingual + typo + ambiguity is a compounded uncertainty problem**  
+   - Current hardening adds limited vocabulary normalization (e.g., `capital de`, `poblacion`) and typo correction.  
+   - Full multilingual support would require broader lexical resources, morphology handling, and language-aware intent parsing.  
+   - Fundamental issue: multiple uncertainty sources interact, so confidence drops non-linearly.
+
+5. **Missing temporal/context dimensions**  
+   - Questions like "current head of state", "historical capital", or "GDP in 2010" require explicit time semantics.  
+   - Fundamental issue: user text often omits temporal qualifiers, but Wikidata facts can be time-dependent.
+
+## What the system does safely for unresolved cases
+
+- Returns explicit statuses instead of silent guessing:
+  - `exit code 3`: `needs_disambiguation`
+  - `exit code 2`: unsupported/underspecified scope
+  - `exit code 4`: contradiction detected
+- Logs normalized input, parse output, and resolution stages for traceability (`wdq.log`).
+- Prefers "ask for clarification / reject safely" over confident wrong answers.
