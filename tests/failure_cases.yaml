@@ -1,0 +1,111 @@
+- id: A1
+  category: ambiguous_input
+  query: "capital of georgia"
+  expected_behavior: "Detect ambiguity and ask user to choose country vs U.S. state."
+  observed_behavior: "Resolved to Q1428 (U.S. state) with ambiguous=false; returned Atlanta."
+  stage_failed: "Entity resolution"
+  severity: critical
+
+- id: A2
+  category: ambiguous_input
+  query: "population of washington"
+  expected_behavior: "Detect ambiguity and ask user to choose state/city/person."
+  observed_behavior: "Resolved directly to Q1223 (state) with ambiguous=false."
+  stage_failed: "Entity resolution"
+  severity: critical
+
+- id: T1
+  category: typo
+  query: "poplation of japen"
+  expected_behavior: "Recover likely typo and map to 'population of japan' or suggest corrections."
+  observed_behavior: "No entity found; request fails."
+  stage_failed: "Parser + entity resolution"
+  severity: major
+
+- id: T2
+  category: typo
+  query: "capitol of caneda"
+  expected_behavior: "Recover typo ('capital', 'canada') or return correction suggestions."
+  observed_behavior: "No entity found; request fails."
+  stage_failed: "Parser + entity resolution"
+  severity: major
+
+- id: M1
+  category: mixed_language
+  query: "capital de canada"
+  expected_behavior: "Handle common multilingual phrase mapping (de -> of)."
+  observed_behavior: "No entity found; request fails."
+  stage_failed: "Parser"
+  severity: major
+
+- id: M2
+  category: mixed_language
+  query: "poblacion of japan"
+  expected_behavior: "Map multilingual property word to population."
+  observed_behavior: "No entity found; request fails."
+  stage_failed: "Parser"
+  severity: major
+
+- id: U1
+  category: underspecified_question
+  query: "biggest cities"
+  expected_behavior: "Ask for missing scope (country/region) and property definition."
+  observed_behavior: "Falls back to entity lookup and fails."
+  stage_failed: "Intent parsing"
+  severity: minor
+
+- id: U2
+  category: underspecified_question
+  query: "countries with high gdp"
+  expected_behavior: "Ask for threshold/ranking definition."
+  observed_behavior: "Falls back to entity lookup and fails."
+  stage_failed: "Intent parsing"
+  severity: minor
+
+- id: C1
+  category: conflicting_constraints
+  query: "smallest cities by highest population"
+  expected_behavior: "Detect contradiction before query generation."
+  observed_behavior: "Falls back to entity lookup and fails."
+  stage_failed: "Intent parsing"
+  severity: major
+
+- id: C2
+  category: conflicting_constraints
+  query: "capital of japan in europe"
+  expected_behavior: "Detect geographic contradiction."
+  observed_behavior: "Parses as capital_of with malformed entity text ('japan in europe') and fails."
+  stage_failed: "Parser validation"
+  severity: major
+
+- id: L1
+  category: unsupported_comparative_logic
+  query: "countries with higher population than france but lower gdp than japan"
+  expected_behavior: "Graceful unsupported-intent message."
+  observed_behavior: "Falls back to entity lookup and fails."
+  stage_failed: "Intent parsing"
+  severity: minor
+
+- id: B1
+  category: baseline_control
+  query: "capital of canada"
+  expected_behavior: "Return Ottawa."
+  observed_behavior: "Pass."
+  stage_failed: "None"
+  severity: none
+
+- id: B2
+  category: baseline_control
+  query: "top 5 cities in germany by population"
+  expected_behavior: "Return ranked city list."
+  observed_behavior: "Pass."
+  stage_failed: "None"
+  severity: none
+
+- id: B3
+  category: baseline_control
+  query: "cities in japan"
+  expected_behavior: "Return city list filtered by country."
+  observed_behavior: "Pass."
+  stage_failed: "None"
+  severity: none
