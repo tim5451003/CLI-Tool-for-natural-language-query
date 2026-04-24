@@ -15,6 +15,16 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+Important:
+- Always activate the virtual environment before installing dependencies and running commands.
+- Run `pip install -r requirements.txt` inside the activated `.venv` so all required packages (including `rapidfuzz`) are available.
+
+Quick smoke test after setup:
+
+```bash
+python wikidata_cli.py "capital of canada"
+```
+
 ## Usage
 
 ```bash
@@ -37,6 +47,19 @@ python wikidata_cli.py "what is python" --json
 - `formatter.py`: CLI 輸出格式化
 - `logging_utils.py`: JSON-lines logging 工具
 - `wikidata_cli.py`: 相容入口（呼叫 `cli.main()`）
+- `normalize_nl.py`: typo／少量多語片語正規化（Harden）
+- `contradictions.py`: 輸入矛盾檢查（Harden）
+- `scope_checks.py`: 範圍外或資訊不足問題的提示（Harden）
+
+## Exit codes (after hardening)
+
+| Code | Meaning |
+|------|---------|
+| 0 | Success |
+| 1 | Network or unexpected error |
+| 2 | Entity not found, or question out of baseline scope |
+| 3 | Disambiguation required (ambiguous entity) |
+| 4 | Contradiction (internally inconsistent input) |
 
 ## What baseline supports now
 
