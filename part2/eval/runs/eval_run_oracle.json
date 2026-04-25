@@ -1,0 +1,1319 @@
+{
+  "run_mode": "oracle",
+  "generated_at_utc": "2026-04-25T12:34:01.114712+00:00",
+  "summary": {
+    "total_examples": 30,
+    "exact_correct": 30,
+    "overall_accuracy": 1.0,
+    "schema_failure_rate": 0.0,
+    "category_accuracy": {
+      "ambiguous": 1.0,
+      "clean": 1.0,
+      "complex_constraints": 1.0,
+      "multilingual_mixed": 1.0,
+      "typo_noisy": 1.0,
+      "underspecified": 1.0
+    },
+    "difficulty_accuracy": {
+      "easy": 1.0,
+      "hard": 1.0,
+      "medium": 1.0
+    }
+  },
+  "results": [
+    {
+      "id": "C04",
+      "category": "clean",
+      "difficulty": "easy",
+      "natural_language_query": "capital of germany",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "capital of germany",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "germany",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "capital of germany",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "germany",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "C02",
+      "category": "clean",
+      "difficulty": "easy",
+      "natural_language_query": "population of france",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "population of france",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "france",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "population of france",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "france",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "C03",
+      "category": "clean",
+      "difficulty": "easy",
+      "natural_language_query": "who is the head of state of canada",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "who is the head of state of canada",
+        "source": "wikidata",
+        "intent": "head_of_state",
+        "entity_label": "canada",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "who is the head of state of canada",
+        "source": "wikidata",
+        "intent": "head_of_state",
+        "entity_label": "canada",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "C05",
+      "category": "clean",
+      "difficulty": "medium",
+      "natural_language_query": "top 10 cities in germany by population",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "top 10 cities in germany by population",
+        "source": "wikidata",
+        "intent": "top_entities_by_property",
+        "entity_label": "",
+        "entity_type": "cities",
+        "location_label": "germany",
+        "property_name": "population",
+        "limit": 10,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "top 10 cities in germany by population",
+        "source": "wikidata",
+        "intent": "top_entities_by_property",
+        "entity_label": "",
+        "entity_type": "cities",
+        "location_label": "germany",
+        "property_name": "population",
+        "limit": 10,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "C01",
+      "category": "clean",
+      "difficulty": "easy",
+      "natural_language_query": "capital of japan",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "capital of japan",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "japan",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "capital of japan",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "japan",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "C06",
+      "category": "clean",
+      "difficulty": "medium",
+      "natural_language_query": "top 5 cities in japan by population",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "top 5 cities in japan by population",
+        "source": "wikidata",
+        "intent": "top_entities_by_property",
+        "entity_label": "",
+        "entity_type": "cities",
+        "location_label": "japan",
+        "property_name": "population",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "top 5 cities in japan by population",
+        "source": "wikidata",
+        "intent": "top_entities_by_property",
+        "entity_label": "",
+        "entity_type": "cities",
+        "location_label": "japan",
+        "property_name": "population",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "T01",
+      "category": "typo_noisy",
+      "difficulty": "medium",
+      "natural_language_query": "poplation of japen",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "population of japan",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "japan",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "population of japan",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "japan",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "T02",
+      "category": "typo_noisy",
+      "difficulty": "medium",
+      "natural_language_query": "capitol of caneda",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "capital of canada",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "canada",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "capital of canada",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "canada",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "T03",
+      "category": "typo_noisy",
+      "difficulty": "medium",
+      "natural_language_query": "can u tell me the captial of frnace",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "capital of france",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "france",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "capital of france",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "france",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "T04",
+      "category": "typo_noisy",
+      "difficulty": "medium",
+      "natural_language_query": "top 5 citiies in germny by population",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "top 5 cities in germany by population",
+        "source": "wikidata",
+        "intent": "top_entities_by_property",
+        "entity_label": "",
+        "entity_type": "cities",
+        "location_label": "germany",
+        "property_name": "population",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "top 5 cities in germany by population",
+        "source": "wikidata",
+        "intent": "top_entities_by_property",
+        "entity_label": "",
+        "entity_type": "cities",
+        "location_label": "germany",
+        "property_name": "population",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "T05",
+      "category": "typo_noisy",
+      "difficulty": "medium",
+      "natural_language_query": "who is the hed of state of braziil",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "who is the head of state of brazil",
+        "source": "wikidata",
+        "intent": "head_of_state",
+        "entity_label": "brazil",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "who is the head of state of brazil",
+        "source": "wikidata",
+        "intent": "head_of_state",
+        "entity_label": "brazil",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "T06",
+      "category": "typo_noisy",
+      "difficulty": "medium",
+      "natural_language_query": "pls show me poplation of taiwn thx",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "population of taiwan",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "taiwan",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "population of taiwan",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "taiwan",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "A01",
+      "category": "ambiguous",
+      "difficulty": "hard",
+      "natural_language_query": "capital of georgia",
+      "ground_truth": {
+        "status": "needs_disambiguation",
+        "normalized_query": "capital of georgia",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "disambiguation_target": "entity",
+        "surface_form": "georgia",
+        "candidate_hints": [
+          "Georgia (country)",
+          "Georgia (U.S. state)"
+        ]
+      },
+      "prediction": {
+        "status": "needs_disambiguation",
+        "normalized_query": "capital of georgia",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "disambiguation_target": "entity",
+        "surface_form": "georgia",
+        "candidate_hints": [
+          "Georgia (country)",
+          "Georgia (U.S. state)"
+        ]
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "disambiguation_target": 1,
+          "surface_form": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "A02",
+      "category": "ambiguous",
+      "difficulty": "hard",
+      "natural_language_query": "population of washington",
+      "ground_truth": {
+        "status": "needs_disambiguation",
+        "normalized_query": "population of washington",
+        "source": "wikidata",
+        "intent": "population_of",
+        "disambiguation_target": "entity",
+        "surface_form": "washington",
+        "candidate_hints": [
+          "Washington (state)",
+          "Washington, D.C."
+        ]
+      },
+      "prediction": {
+        "status": "needs_disambiguation",
+        "normalized_query": "population of washington",
+        "source": "wikidata",
+        "intent": "population_of",
+        "disambiguation_target": "entity",
+        "surface_form": "washington",
+        "candidate_hints": [
+          "Washington (state)",
+          "Washington, D.C."
+        ]
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "disambiguation_target": 1,
+          "surface_form": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "A03",
+      "category": "ambiguous",
+      "difficulty": "hard",
+      "natural_language_query": "head of state of congo",
+      "ground_truth": {
+        "status": "needs_disambiguation",
+        "normalized_query": "head of state of congo",
+        "source": "wikidata",
+        "intent": "head_of_state",
+        "disambiguation_target": "entity",
+        "surface_form": "congo",
+        "candidate_hints": [
+          "Republic of the Congo",
+          "Democratic Republic of the Congo"
+        ]
+      },
+      "prediction": {
+        "status": "needs_disambiguation",
+        "normalized_query": "head of state of congo",
+        "source": "wikidata",
+        "intent": "head_of_state",
+        "disambiguation_target": "entity",
+        "surface_form": "congo",
+        "candidate_hints": [
+          "Republic of the Congo",
+          "Democratic Republic of the Congo"
+        ]
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "disambiguation_target": 1,
+          "surface_form": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "A04",
+      "category": "ambiguous",
+      "difficulty": "hard",
+      "natural_language_query": "population of jersey",
+      "ground_truth": {
+        "status": "needs_disambiguation",
+        "normalized_query": "population of jersey",
+        "source": "wikidata",
+        "intent": "population_of",
+        "disambiguation_target": "entity",
+        "surface_form": "jersey",
+        "candidate_hints": [
+          "Jersey (island)",
+          "New Jersey (U.S. state)"
+        ]
+      },
+      "prediction": {
+        "status": "needs_disambiguation",
+        "normalized_query": "population of jersey",
+        "source": "wikidata",
+        "intent": "population_of",
+        "disambiguation_target": "entity",
+        "surface_form": "jersey",
+        "candidate_hints": [
+          "Jersey (island)",
+          "New Jersey (U.S. state)"
+        ]
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "disambiguation_target": 1,
+          "surface_form": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "A05",
+      "category": "ambiguous",
+      "difficulty": "hard",
+      "natural_language_query": "capital of guinea",
+      "ground_truth": {
+        "status": "needs_disambiguation",
+        "normalized_query": "capital of guinea",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "disambiguation_target": "entity",
+        "surface_form": "guinea",
+        "candidate_hints": [
+          "Guinea",
+          "Papua New Guinea",
+          "Equatorial Guinea"
+        ]
+      },
+      "prediction": {
+        "status": "needs_disambiguation",
+        "normalized_query": "capital of guinea",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "disambiguation_target": "entity",
+        "surface_form": "guinea",
+        "candidate_hints": [
+          "Guinea",
+          "Papua New Guinea",
+          "Equatorial Guinea"
+        ]
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "disambiguation_target": 1,
+          "surface_form": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "A06",
+      "category": "ambiguous",
+      "difficulty": "hard",
+      "natural_language_query": "cities in victoria",
+      "ground_truth": {
+        "status": "needs_disambiguation",
+        "normalized_query": "cities in victoria",
+        "source": "wikidata",
+        "intent": "list_by_type_and_location",
+        "disambiguation_target": "location",
+        "surface_form": "victoria",
+        "candidate_hints": [
+          "Victoria (Australia)",
+          "Victoria (British Columbia)",
+          "Victoria (Seychelles)"
+        ]
+      },
+      "prediction": {
+        "status": "needs_disambiguation",
+        "normalized_query": "cities in victoria",
+        "source": "wikidata",
+        "intent": "list_by_type_and_location",
+        "disambiguation_target": "location",
+        "surface_form": "victoria",
+        "candidate_hints": [
+          "Victoria (Australia)",
+          "Victoria (British Columbia)",
+          "Victoria (Seychelles)"
+        ]
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "disambiguation_target": 1,
+          "surface_form": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "M01",
+      "category": "multilingual_mixed",
+      "difficulty": "hard",
+      "natural_language_query": "capital de canada",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "capital of canada",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "canada",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "capital of canada",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "canada",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "M02",
+      "category": "multilingual_mixed",
+      "difficulty": "hard",
+      "natural_language_query": "poblacion of japan",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "population of japan",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "japan",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "population of japan",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "japan",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "M03",
+      "category": "multilingual_mixed",
+      "difficulty": "hard",
+      "natural_language_query": "quelle est la capitale of germany",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "capital of germany",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "germany",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "capital of germany",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "germany",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "M04",
+      "category": "multilingual_mixed",
+      "difficulty": "hard",
+      "natural_language_query": "capital de brasil",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "capital of brazil",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "brazil",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "capital of brazil",
+        "source": "wikidata",
+        "intent": "capital_of",
+        "entity_label": "brazil",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "M05",
+      "category": "multilingual_mixed",
+      "difficulty": "hard",
+      "natural_language_query": "ciudades in japan by population top 5",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "top 5 cities in japan by population",
+        "source": "wikidata",
+        "intent": "top_entities_by_property",
+        "entity_label": "",
+        "entity_type": "cities",
+        "location_label": "japan",
+        "property_name": "population",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "top 5 cities in japan by population",
+        "source": "wikidata",
+        "intent": "top_entities_by_property",
+        "entity_label": "",
+        "entity_type": "cities",
+        "location_label": "japan",
+        "property_name": "population",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "M06",
+      "category": "multilingual_mixed",
+      "difficulty": "hard",
+      "natural_language_query": "population de france",
+      "ground_truth": {
+        "status": "ok",
+        "normalized_query": "population of france",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "france",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "prediction": {
+        "status": "ok",
+        "normalized_query": "population of france",
+        "source": "wikidata",
+        "intent": "population_of",
+        "entity_label": "france",
+        "entity_type": "",
+        "location_label": "",
+        "property_name": "",
+        "limit": 5,
+        "language": "en"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "source": 1,
+          "intent": 1,
+          "entity_label": 1,
+          "entity_type": 1,
+          "location_label": 1,
+          "property_name": 1,
+          "limit": 1,
+          "language": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "X01",
+      "category": "underspecified",
+      "difficulty": "hard",
+      "natural_language_query": "biggest cities",
+      "ground_truth": {
+        "status": "unsupported_or_underspecified",
+        "normalized_query": "biggest cities",
+        "reason": "missing scope (country/region) and ranking property definition"
+      },
+      "prediction": {
+        "status": "unsupported_or_underspecified",
+        "normalized_query": "biggest cities",
+        "reason": "missing scope (country/region) and ranking property definition"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "reason": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "X02",
+      "category": "underspecified",
+      "difficulty": "hard",
+      "natural_language_query": "countries with high gdp",
+      "ground_truth": {
+        "status": "unsupported_or_underspecified",
+        "normalized_query": "countries with high gdp",
+        "reason": "missing explicit threshold/ranking definition for 'high'"
+      },
+      "prediction": {
+        "status": "unsupported_or_underspecified",
+        "normalized_query": "countries with high gdp",
+        "reason": "missing explicit threshold/ranking definition for 'high'"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "reason": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "X03",
+      "category": "underspecified",
+      "difficulty": "hard",
+      "natural_language_query": "top cities",
+      "ground_truth": {
+        "status": "unsupported_or_underspecified",
+        "normalized_query": "top cities",
+        "reason": "missing scope and ranking property/limit details"
+      },
+      "prediction": {
+        "status": "unsupported_or_underspecified",
+        "normalized_query": "top cities",
+        "reason": "missing scope and ranking property/limit details"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "reason": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "X04",
+      "category": "complex_constraints",
+      "difficulty": "hard",
+      "natural_language_query": "smallest cities by highest population",
+      "ground_truth": {
+        "status": "contradiction",
+        "normalized_query": "smallest cities by highest population",
+        "reason": "ranking intent is internally contradictory"
+      },
+      "prediction": {
+        "status": "contradiction",
+        "normalized_query": "smallest cities by highest population",
+        "reason": "ranking intent is internally contradictory"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "reason": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "X05",
+      "category": "complex_constraints",
+      "difficulty": "hard",
+      "natural_language_query": "capital of japan in europe",
+      "ground_truth": {
+        "status": "contradiction",
+        "normalized_query": "capital of japan in europe",
+        "reason": "geographic constraint contradicts known world facts"
+      },
+      "prediction": {
+        "status": "contradiction",
+        "normalized_query": "capital of japan in europe",
+        "reason": "geographic constraint contradicts known world facts"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "reason": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    },
+    {
+      "id": "X06",
+      "category": "complex_constraints",
+      "difficulty": "hard",
+      "natural_language_query": "countries with higher population than france but lower gdp than japan",
+      "ground_truth": {
+        "status": "unsupported_or_underspecified",
+        "normalized_query": "countries with higher population than france but lower gdp than japan",
+        "reason": "complex comparative query not supported in baseline target schema"
+      },
+      "prediction": {
+        "status": "unsupported_or_underspecified",
+        "normalized_query": "countries with higher population than france but lower gdp than japan",
+        "reason": "complex comparative query not supported in baseline target schema"
+      },
+      "score": {
+        "exact_correct": 1,
+        "semantic_score": 1.0,
+        "field_scores": {
+          "status": 1,
+          "normalized_query": 1,
+          "reason": 1
+        },
+        "schema_valid": true,
+        "schema_errors": []
+      }
+    }
+  ]
+}
