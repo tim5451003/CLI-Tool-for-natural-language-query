@@ -1,0 +1,9 @@
+{
+  "total_examples": 30,
+  "ground_truth_status_counts": {
+    "contradiction": 2,
+    "needs_disambiguation": 6,
+    "ok": 18,
+    "unsupported_or_underspecified": 4
+  }
+}

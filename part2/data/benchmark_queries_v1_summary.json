@@ -1,0 +1,16 @@
+{
+  "total_queries": 30,
+  "category_counts": {
+    "ambiguous": 6,
+    "clean": 6,
+    "complex_constraints": 3,
+    "multilingual_mixed": 6,
+    "typo_noisy": 6,
+    "underspecified": 3
+  },
+  "difficulty_counts": {
+    "easy": 4,
+    "hard": 18,
+    "medium": 8
+  }
+}

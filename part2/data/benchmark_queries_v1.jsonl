@@ -1,0 +1,30 @@
+{"id": "C04", "natural_language_query": "capital of germany", "difficulty": "easy", "category": "clean", "notes": "simple clean fact lookup"}
+{"id": "C02", "natural_language_query": "population of france", "difficulty": "easy", "category": "clean", "notes": "simple clean numeric fact"}
+{"id": "C03", "natural_language_query": "who is the head of state of canada", "difficulty": "easy", "category": "clean", "notes": "clean relation lookup"}
+{"id": "C05", "natural_language_query": "top 10 cities in germany by population", "difficulty": "medium", "category": "clean", "notes": "clean top-N ranking query"}
+{"id": "C01", "natural_language_query": "capital of japan", "difficulty": "easy", "category": "clean", "notes": "simple clean fact lookup"}
+{"id": "C06", "natural_language_query": "top 5 cities in japan by population", "difficulty": "medium", "category": "clean", "notes": "clean top-N ranking query"}
+{"id": "T01", "natural_language_query": "poplation of japen", "difficulty": "medium", "category": "typo_noisy", "notes": "intentionally typo/noisy wording"}
+{"id": "T02", "natural_language_query": "capitol of caneda", "difficulty": "medium", "category": "typo_noisy", "notes": "intentionally typo/noisy wording"}
+{"id": "T03", "natural_language_query": "can u tell me the captial of frnace", "difficulty": "medium", "category": "typo_noisy", "notes": "intentionally typo/noisy wording"}
+{"id": "T04", "natural_language_query": "top 5 citiies in germny by population", "difficulty": "medium", "category": "typo_noisy", "notes": "intentionally typo/noisy wording"}
+{"id": "T05", "natural_language_query": "who is the hed of state of braziil", "difficulty": "medium", "category": "typo_noisy", "notes": "intentionally typo/noisy wording"}
+{"id": "T06", "natural_language_query": "pls show me poplation of taiwn thx", "difficulty": "medium", "category": "typo_noisy", "notes": "intentionally typo/noisy wording"}
+{"id": "A01", "natural_language_query": "capital of georgia", "difficulty": "hard", "category": "ambiguous", "notes": "surface form has multiple valid entities"}
+{"id": "A02", "natural_language_query": "population of washington", "difficulty": "hard", "category": "ambiguous", "notes": "surface form has multiple valid entities"}
+{"id": "A03", "natural_language_query": "head of state of congo", "difficulty": "hard", "category": "ambiguous", "notes": "surface form has multiple valid entities"}
+{"id": "A04", "natural_language_query": "population of jersey", "difficulty": "hard", "category": "ambiguous", "notes": "surface form has multiple valid entities"}
+{"id": "A05", "natural_language_query": "capital of guinea", "difficulty": "hard", "category": "ambiguous", "notes": "surface form has multiple valid entities"}
+{"id": "A06", "natural_language_query": "cities in victoria", "difficulty": "hard", "category": "ambiguous", "notes": "surface form has multiple valid entities"}
+{"id": "M01", "natural_language_query": "capital de canada", "difficulty": "hard", "category": "multilingual_mixed", "notes": "mixed-language phrase or token"}
+{"id": "M02", "natural_language_query": "poblacion of japan", "difficulty": "hard", "category": "multilingual_mixed", "notes": "mixed-language phrase or token"}
+{"id": "M03", "natural_language_query": "quelle est la capitale of germany", "difficulty": "hard", "category": "multilingual_mixed", "notes": "mixed-language phrase or token"}
+{"id": "M04", "natural_language_query": "capital de brasil", "difficulty": "hard", "category": "multilingual_mixed", "notes": "mixed-language phrase or token"}
+{"id": "M05", "natural_language_query": "ciudades in japan by population top 5", "difficulty": "hard", "category": "multilingual_mixed", "notes": "mixed-language phrase or token"}
+{"id": "M06", "natural_language_query": "population de france", "difficulty": "hard", "category": "multilingual_mixed", "notes": "mixed-language phrase or token"}
+{"id": "X01", "natural_language_query": "biggest cities", "difficulty": "hard", "category": "underspecified", "notes": "adversarial edge-case input"}
+{"id": "X02", "natural_language_query": "countries with high gdp", "difficulty": "hard", "category": "underspecified", "notes": "adversarial edge-case input"}
+{"id": "X03", "natural_language_query": "top cities", "difficulty": "hard", "category": "underspecified", "notes": "adversarial edge-case input"}
+{"id": "X04", "natural_language_query": "smallest cities by highest population", "difficulty": "hard", "category": "complex_constraints", "notes": "adversarial edge-case input"}
+{"id": "X05", "natural_language_query": "capital of japan in europe", "difficulty": "hard", "category": "complex_constraints", "notes": "adversarial edge-case input"}
+{"id": "X06", "natural_language_query": "countries with higher population than france but lower gdp than japan", "difficulty": "hard", "category": "complex_constraints", "notes": "adversarial edge-case input"}
