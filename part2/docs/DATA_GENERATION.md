@@ -39,4 +39,3 @@ Outputs:
 ## Notes
 
 - This step covers only Part 2 Requirement 1 (data generation).
-- Ground truth labels and model evaluation pipeline are intentionally left for the next steps.
