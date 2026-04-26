@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
 from typing import Any, Dict, List
 
 import requests
@@ -25,6 +26,10 @@ AVAILABLE_MODES = [
     "naive",
     "openai_gpt4o_mini",
     "openai_gpt4_1",
+    "deepseek_v3",
+    "deepseek_v3_balanced",
+    "google_gemini_2_0_flash",
+    "google_gemini_2_5_flash",
     "together_llama_3_1_70b",
     "ollama_qwen2_5_7b",
     "ollama_qwen2_5_7b_balanced",
@@ -173,9 +178,24 @@ def _extract_json_object(text: str) -> Dict[str, Any]:
 
 
 def _post_json(url: str, headers: Dict[str, str], payload: Dict[str, Any]) -> Dict[str, Any]:
-    resp = requests.post(url, headers=headers, json=payload, timeout=90)
-    resp.raise_for_status()
-    return resp.json()
+    last_err: Exception | None = None
+    for attempt in range(4):
+        try:
+            resp = requests.post(url, headers=headers, json=payload, timeout=90)
+            if resp.status_code == 429 and attempt < 3:
+                time.sleep(2 * (attempt + 1))
+                continue
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as exc:
+            last_err = exc
+            if attempt < 3:
+                time.sleep(2 * (attempt + 1))
+                continue
+            break
+    if last_err:
+        raise last_err
+    raise RuntimeError("Unknown HTTP error")
 
 
 def _ollama_chat_once(model_name: str, user_prompt: str) -> str:
@@ -272,6 +292,98 @@ def _predict_openai(query: str, model_name: str) -> Dict[str, Any]:
     )
     content = data["choices"][0]["message"]["content"]
     return _extract_json_object(content)
+
+
+def _predict_deepseek(query: str, model_name: str) -> Dict[str, Any]:
+    api_key = os.getenv("DEEPSEEK_API_KEY")
+    if not api_key:
+        raise RuntimeError("DEEPSEEK_API_KEY is not set")
+    body = {
+        "model": model_name,
+        "temperature": 0,
+        "messages": [
+            {"role": "system", "content": "Return only valid JSON object."},
+            {"role": "user", "content": _build_prompt(query)},
+        ],
+    }
+    data = _post_json(
+        "https://api.deepseek.com/chat/completions",
+        {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+        body,
+    )
+    content = data["choices"][0]["message"]["content"]
+    return _extract_json_object(content)
+
+
+def _deepseek_chat_once(user_prompt: str, model_name: str) -> str:
+    api_key = os.getenv("DEEPSEEK_API_KEY")
+    if not api_key:
+        raise RuntimeError("DEEPSEEK_API_KEY is not set")
+    body = {
+        "model": model_name,
+        "temperature": 0,
+        "messages": [
+            {"role": "system", "content": "Return only valid JSON object."},
+            {"role": "user", "content": user_prompt},
+        ],
+    }
+    data = _post_json(
+        "https://api.deepseek.com/chat/completions",
+        {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+        body,
+    )
+    return data["choices"][0]["message"]["content"]
+
+
+def _predict_deepseek_balanced(query: str, model_name: str) -> Dict[str, Any]:
+    try:
+        phase1_text = _deepseek_chat_once(_build_phase1_prompt(query), model_name=model_name)
+        phase1 = _extract_json_object(phase1_text)
+    except Exception:
+        phase1 = {}
+
+    try:
+        phase2_text = _deepseek_chat_once(_build_phase2_prompt(query, phase1), model_name=model_name)
+        parsed = _extract_json_object(phase2_text)
+    except Exception:
+        parsed = {}
+
+    aligned = _postprocess_prediction_mistral(query, parsed)
+    valid, errors = validate_prediction_schema(aligned)
+    if valid:
+        return aligned
+
+    try:
+        retry_text = _deepseek_chat_once(
+            _build_phase2_prompt(query, phase1, repair_errors=errors),
+            model_name=model_name,
+        )
+        retry_parsed = _extract_json_object(retry_text)
+    except Exception:
+        retry_parsed = {}
+    return _postprocess_prediction_mistral(query, retry_parsed)
+
+
+def _predict_gemini(query: str, model_name: str) -> Dict[str, Any]:
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY is not set")
+    body = {
+        "contents": [{"parts": [{"text": _build_prompt(query)}]}],
+        "generationConfig": {
+            "temperature": 0,
+            "topP": 1,
+            "responseMimeType": "text/plain",
+        },
+    }
+    data = _post_json(
+        f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}",
+        {"Content-Type": "application/json"},
+        body,
+    )
+    parts = data.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+    text = "".join(str(p.get("text", "")) for p in parts)
+    return _extract_json_object(text)
 
 
 def _predict_together_model(query: str, model_slug: str) -> Dict[str, Any]:
@@ -830,6 +942,30 @@ def predict_with_mode(mode: str, row: Dict[str, Any]) -> Dict[str, Any]:
 
     if mode == "openai_gpt4_1":
         return _predict_openai(row["natural_language_query"], model_name="gpt-4.1")
+
+    if mode == "deepseek_v3":
+        return _predict_deepseek(
+            row["natural_language_query"],
+            model_name="deepseek-chat",
+        )
+
+    if mode == "deepseek_v3_balanced":
+        return _predict_deepseek_balanced(
+            row["natural_language_query"],
+            model_name="deepseek-chat",
+        )
+
+    if mode == "google_gemini_2_0_flash":
+        return _predict_gemini(
+            row["natural_language_query"],
+            model_name="gemini-2.0-flash",
+        )
+
+    if mode == "google_gemini_2_5_flash":
+        return _predict_gemini(
+            row["natural_language_query"],
+            model_name="gemini-2.5-flash",
+        )
 
     if mode == "together_llama_3_1_70b":
         return _predict_together_model(

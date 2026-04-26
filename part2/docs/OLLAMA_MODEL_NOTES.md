@@ -108,7 +108,26 @@ Mistral 提升到 >85% 的做法（且不影響 Qwen）：
 
 這條路徑的重點是「模型特性對齊」，不是重新訓練或修改 Qwen 規則。
 
-## 7) 學到的重點（Lessons Learned）
+## 7) DeepSeek V3 調整紀錄（達到 26/30）
+
+`deepseek_v3` 初版（單階段、raw）結果：
+
+- `exact_correct = 0/30`
+- `tolerant_correct = 18/30`
+
+調整後改為 `deepseek_v3_balanced`（兩階段 + 修復重試 + balanced 後處理）：
+
+- `exact_correct = 26/30`
+- `overall_accuracy = 0.8667`
+- `tolerant_correct = 30/30`
+
+關鍵做法：
+
+1. 先跑 phase-1（`status/intent/normalized_query`）再跑 phase-2（完整 schema）
+2. phase-2 失敗時，帶 schema error 做一次修復重試
+3. 套用與 balanced 一致的通用語意對齊（不改 Qwen/Mistral 成功路徑）
+
+## 8) 學到的重點（Lessons Learned）
 
 1. **可重現性先於準確率**
    - 沒有固定隨機性時，分數波動會掩蓋真實改動效果。
@@ -127,7 +146,7 @@ Mistral 提升到 >85% 的做法（且不影響 Qwen）：
    - 若評分是字串完全比對，reason wording 差異會造成 strict 掉分。
    - 後續可考慮把 reason 的評分改成語意比對或模板級比對。
 
-## 8) 下一步建議
+## 9) 下一步建議
 
 - 建立 holdout 題集（不重複既有模板）驗證泛化。
 - 併行回報 `raw / balanced / hard-rule` 三條曲線。

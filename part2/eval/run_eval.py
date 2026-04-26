@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -46,12 +47,12 @@ def summarize(results: List[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
-def run(mode: str, output_dir: Path) -> Path:
+def run(mode: str, output_dir: Path, sleep_seconds: float = 0.0) -> Path:
     root = Path(__file__).resolve().parents[2]
     rows = load_benchmark_with_ground_truth(root)
 
     detailed_results: List[Dict[str, Any]] = []
-    for row in rows:
+    for idx, row in enumerate(rows):
         gt = row["ground_truth_structured_query"]
         pred = predict_with_mode(mode, row)
         score = score_single_prediction(gt, pred)
@@ -66,6 +67,8 @@ def run(mode: str, output_dir: Path) -> Path:
                 "score": score,
             }
         )
+        if sleep_seconds > 0 and idx < len(rows) - 1:
+            time.sleep(sleep_seconds)
 
     summary = summarize(detailed_results)
     payload = {
@@ -94,9 +97,15 @@ def main() -> int:
         default="part2/eval/runs",
         help="Directory to write evaluation run JSON",
     )
+    parser.add_argument(
+        "--sleep-seconds",
+        type=float,
+        default=0.0,
+        help="Fixed delay between each query request (seconds)",
+    )
     args = parser.parse_args()
 
-    path = run(mode=args.mode, output_dir=Path(args.output_dir))
+    path = run(mode=args.mode, output_dir=Path(args.output_dir), sleep_seconds=max(0.0, args.sleep_seconds))
     print(f"Wrote evaluation run to: {path}")
     return 0
 
