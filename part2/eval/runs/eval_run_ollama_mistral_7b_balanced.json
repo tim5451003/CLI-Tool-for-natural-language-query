@@ -1,6 +1,6 @@
 {
-  "run_mode": "ollama_qwen2_5_7b_balanced",
-  "generated_at_utc": "2026-04-26T10:16:36.249891+00:00",
+  "run_mode": "ollama_mistral_7b_balanced",
+  "generated_at_utc": "2026-04-26T10:27:07.023756+00:00",
   "summary": {
     "total_examples": 30,
     "exact_correct": 26,

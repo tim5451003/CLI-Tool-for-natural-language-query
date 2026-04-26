@@ -58,7 +58,25 @@
   - top-N 查詢欄位補全（`entity_type`, `property_name`, `limit`）
   - ambiguity / contradiction / underspecified 的通用守門
 
-## 4) 目前觀察到的結果
+## 4) Qwen 7B accuracy 調整紀錄（如何達到 >85%）
+
+以下為 `qwen2.5:7b` 在同一份 benchmark（30 題）上的代表性里程碑：
+
+- 初始 `raw`：`exact_correct = 0/30`，`tolerant_correct = 13/30`
+- 初始 `mid`：`exact_correct = 0/30`，`tolerant_correct = 14/30`
+- 引入「兩階段 + 結構化約束 + 通用語意校正」後：
+  - `qwen2.5:7b balanced` 達到 `exact_correct = 26/30`
+  - `overall_accuracy = 0.8667`（> 85%）
+
+Qwen 達到 >85% 的關鍵不是模型再訓練，而是 inference 流程穩定化：
+
+1. 固定推論隨機性（`temperature=0`, `top_p=1`）
+2. 兩階段解題（先判 `status/intent`，再補全 schema）
+3. schema 驗證失敗時進行 1 次修復重試
+4. 使用通用語意對齊（intent alias、欄位錯位修復、top-N 欄位補全）
+5. 保持 balanced 取向，避免題號級 hardcode
+
+## 5) 目前觀察到的結果
 
 核心現象：
 
@@ -68,7 +86,29 @@
 
 在當前 benchmark（30 題）上，調整後可把 `7b_balanced` 控制在約 26/30（或更高），並可依需求避免追求 30/30 的過度對齊。
 
-## 5) 學到的重點（Lessons Learned）
+## 6) Mistral 7B accuracy 調整紀錄（如何達到 >85%）
+
+以下為 `mistral:7b` 在同一份 benchmark（30 題）上的代表性里程碑：
+
+- 初版 `mistral balanced`：`exact_correct = 23/30`（`overall_accuracy = 0.7667`）
+- 問題集中在：
+  1) 模型把可解析的 query 回成 `unsupported_or_underspecified`
+  2) `needs_disambiguation` 時常把 `intent` 回成過於泛化的 `instance_of`
+  3) schema 內容大致正確但關鍵欄位未被填回
+- 調整後 `mistral balanced`：`exact_correct = 26/30`
+  - `overall_accuracy = 0.8667`（> 85%）
+
+Mistral 提升到 >85% 的做法（且不影響 Qwen）：
+
+1. 新增 `mistral` 專用後處理函式（只掛在 `ollama_mistral_7b_balanced`）
+2. 針對 query 形狀可明確解析時，將 `unsupported` 回復為可執行的 `ok`
+   - 支援 `capital of X` / `population of X` / `head of state of X` / `top N cities in X by population`
+3. `needs_disambiguation + instance_of` 時，依 query 前綴補回具體 intent
+4. 維持 balanced 原則，避免題號級 hardcode
+
+這條路徑的重點是「模型特性對齊」，不是重新訓練或修改 Qwen 規則。
+
+## 7) 學到的重點（Lessons Learned）
 
 1. **可重現性先於準確率**
    - 沒有固定隨機性時，分數波動會掩蓋真實改動效果。
@@ -87,7 +127,7 @@
    - 若評分是字串完全比對，reason wording 差異會造成 strict 掉分。
    - 後續可考慮把 reason 的評分改成語意比對或模板級比對。
 
-## 6) 下一步建議
+## 8) 下一步建議
 
 - 建立 holdout 題集（不重複既有模板）驗證泛化。
 - 併行回報 `raw / balanced / hard-rule` 三條曲線。

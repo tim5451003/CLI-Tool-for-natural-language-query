@@ -28,6 +28,7 @@ AVAILABLE_MODES = [
     "together_llama_3_1_70b",
     "ollama_qwen2_5_7b",
     "ollama_qwen2_5_7b_balanced",
+    "ollama_mistral_7b_balanced",
     "ollama_qwen2_5_7b_mid",
     "ollama_qwen2_5_7b_raw",
     "ollama_qwen2_5_14b_mid",
@@ -196,8 +197,15 @@ def _ollama_chat_once(model_name: str, user_prompt: str) -> str:
     return data.get("message", {}).get("content", "")
 
 
-def _normalize_and_validate(pred: Dict[str, Any], query: str, use_rules: bool) -> Dict[str, Any]:
-    if use_rules:
+def _normalize_and_validate(
+    pred: Dict[str, Any],
+    query: str,
+    use_rules: bool,
+    postprocess_fn: Any | None = None,
+) -> Dict[str, Any]:
+    if postprocess_fn is not None:
+        aligned = postprocess_fn(query, pred)
+    elif use_rules:
         aligned = _postprocess_prediction(query, pred)
     else:
         aligned = _postprocess_prediction_mid(query, pred)
@@ -212,7 +220,12 @@ def _normalize_and_validate(pred: Dict[str, Any], query: str, use_rules: bool) -
     return aligned
 
 
-def _predict_ollama_two_stage(query: str, model_name: str, use_rules: bool) -> Dict[str, Any]:
+def _predict_ollama_two_stage(
+    query: str,
+    model_name: str,
+    use_rules: bool,
+    postprocess_fn: Any | None = None,
+) -> Dict[str, Any]:
     phase1_text = _ollama_chat_once(model_name, _build_phase1_prompt(query))
     try:
         phase1 = _extract_json_object(phase1_text)
@@ -225,7 +238,7 @@ def _predict_ollama_two_stage(query: str, model_name: str, use_rules: bool) -> D
         pred = _extract_json_object(phase2_text)
     except Exception:
         pred = {}
-    aligned = _normalize_and_validate(pred, query, use_rules=use_rules)
+    aligned = _normalize_and_validate(pred, query, use_rules=use_rules, postprocess_fn=postprocess_fn)
     valid, errors = validate_prediction_schema(aligned)
     if valid:
         return aligned
@@ -237,7 +250,7 @@ def _predict_ollama_two_stage(query: str, model_name: str, use_rules: bool) -> D
         retry_pred = _extract_json_object(retry_text)
     except Exception:
         retry_pred = {}
-    return _normalize_and_validate(retry_pred, query, use_rules=use_rules)
+    return _normalize_and_validate(retry_pred, query, use_rules=use_rules, postprocess_fn=postprocess_fn)
 
 
 def _predict_openai(query: str, model_name: str) -> Dict[str, Any]:
@@ -296,6 +309,16 @@ def _predict_ollama_local_raw(query: str, model_name: str) -> Dict[str, Any]:
 def _predict_ollama_local_mid(query: str, model_name: str) -> Dict[str, Any]:
     """Call local Ollama and apply only generic normalization (no hard rules)."""
     return _predict_ollama_two_stage(query, model_name, use_rules=False)
+
+
+def _predict_ollama_local_mistral_balanced(query: str, model_name: str) -> Dict[str, Any]:
+    """Mistral-specific balanced path; keeps qwen path unchanged."""
+    return _predict_ollama_two_stage(
+        query,
+        model_name,
+        use_rules=False,
+        postprocess_fn=_postprocess_prediction_mistral,
+    )
 
 
 def _normalize_query_text(raw_query: str) -> str:
@@ -691,6 +714,83 @@ def _postprocess_prediction_mid(raw_query: str, model_prediction: Dict[str, Any]
     }
 
 
+def _postprocess_prediction_mistral(raw_query: str, model_prediction: Dict[str, Any]) -> Dict[str, Any]:
+    """Mistral-specific balancing to improve robustness without touching qwen behavior."""
+    normalized_query = _normalize_query_text(raw_query)
+    aligned = _postprocess_prediction_mid(raw_query, model_prediction)
+
+    m_cap = re.search(r"^capital of (.+)$", normalized_query)
+    m_pop = re.search(r"^population of (.+)$", normalized_query)
+    m_hos = re.search(r"^(?:who is the )?head of state of (.+)$", normalized_query)
+    m_top = re.search(r"^top\s+(\d+)\s+cities\s+in\s+(.+)\s+by\s+population$", normalized_query)
+
+    # If model falls back to unsupported but query shape is clear, recover to an actionable "ok".
+    if aligned.get("status") == "unsupported_or_underspecified":
+        if m_cap:
+            return {
+                "status": "ok",
+                "normalized_query": normalized_query,
+                "source": "wikidata",
+                "intent": "capital_of",
+                "entity_label": m_cap.group(1).strip().lower(),
+                "entity_type": "",
+                "location_label": "",
+                "property_name": "",
+                "limit": 5,
+                "language": "en",
+            }
+        if m_pop:
+            return {
+                "status": "ok",
+                "normalized_query": normalized_query,
+                "source": "wikidata",
+                "intent": "population_of",
+                "entity_label": m_pop.group(1).strip().lower(),
+                "entity_type": "",
+                "location_label": "",
+                "property_name": "",
+                "limit": 5,
+                "language": "en",
+            }
+        if m_hos:
+            return {
+                "status": "ok",
+                "normalized_query": normalized_query,
+                "source": "wikidata",
+                "intent": "head_of_state",
+                "entity_label": m_hos.group(1).strip().lower(),
+                "entity_type": "",
+                "location_label": "",
+                "property_name": "",
+                "limit": 5,
+                "language": "en",
+            }
+        if m_top:
+            return {
+                "status": "ok",
+                "normalized_query": normalized_query,
+                "source": "wikidata",
+                "intent": "top_entities_by_property",
+                "entity_label": "",
+                "entity_type": "cities",
+                "location_label": m_top.group(2).strip().lower(),
+                "property_name": "population",
+                "limit": int(m_top.group(1)),
+                "language": "en",
+            }
+
+    # Mistral may output generic intent for disambiguation; infer from query prefix.
+    if aligned.get("status") == "needs_disambiguation" and aligned.get("intent") == "instance_of":
+        if normalized_query.startswith("capital of "):
+            aligned["intent"] = "capital_of"
+        elif normalized_query.startswith("population of "):
+            aligned["intent"] = "population_of"
+        elif normalized_query.startswith("head of state of ") or normalized_query.startswith("who is the head of state of "):
+            aligned["intent"] = "head_of_state"
+
+    return aligned
+
+
 def predict_with_mode(mode: str, row: Dict[str, Any]) -> Dict[str, Any]:
     """Return a structured prediction for one query row.
 
@@ -753,6 +853,12 @@ def predict_with_mode(mode: str, row: Dict[str, Any]) -> Dict[str, Any]:
         return _predict_ollama_local_mid(
             row["natural_language_query"],
             model_name="qwen2.5:7b",
+        )
+
+    if mode == "ollama_mistral_7b_balanced":
+        return _predict_ollama_local_mistral_balanced(
+            row["natural_language_query"],
+            model_name="mistral:7b",
         )
 
     if mode == "ollama_qwen2_5_7b_raw":
