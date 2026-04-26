@@ -17,7 +17,9 @@ from .scoring import score_single_prediction
 def summarize(results: List[Dict[str, Any]]) -> Dict[str, Any]:
     total = len(results)
     exact = sum(r["score"]["exact_correct"] for r in results)
+    tolerant = sum(r["score"].get("tolerant_correct", 0) for r in results)
     overall_accuracy = exact / total if total else 0.0
+    tolerant_accuracy = tolerant / total if total else 0.0
 
     by_category: Dict[str, List[int]] = defaultdict(list)
     by_difficulty: Dict[str, List[int]] = defaultdict(list)
@@ -32,6 +34,8 @@ def summarize(results: List[Dict[str, Any]]) -> Dict[str, Any]:
         "total_examples": total,
         "exact_correct": exact,
         "overall_accuracy": round(overall_accuracy, 4),
+        "tolerant_correct": tolerant,
+        "tolerant_accuracy": round(tolerant_accuracy, 4),
         "schema_failure_rate": round(schema_failures / total, 4) if total else 0.0,
         "category_accuracy": {
             k: round(sum(v) / len(v), 4) for k, v in sorted(by_category.items())

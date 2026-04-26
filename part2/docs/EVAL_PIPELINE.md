@@ -31,29 +31,31 @@ Weak baseline check:
 python -m part2.eval.run_eval --mode naive
 ```
 
-## Real model modes (3-model mix: closed-source + open-weight)
+## Real model modes (4-model mix: 2 closed-source + 2 open-weight)
 
 Implemented modes:
 
-- `openai_gpt4o_mini` (closed-source)
-- `anthropic_claude_3_5_haiku` (closed-source)
-- `together_llama_3_1_70b` (open-weight model served via API)
+- `openai_gpt4o_mini` (closed-source via OpenAI API)
+- `openai_gpt4_1` (closed-source via OpenAI API)
+- `together_llama_3_1_70b` (open-weight via Together API)
+- `ollama_qwen2_5_7b` (open-weight local deployment via Ollama)
 
-Set API keys before running:
+Set environment variables before running:
 
 ```bash
 # PowerShell
 $env:OPENAI_API_KEY="..."
-$env:ANTHROPIC_API_KEY="..."
 $env:TOGETHER_API_KEY="..."
+$env:OLLAMA_BASE_URL="http://localhost:11434"   # optional
 ```
 
 Example runs:
 
 ```bash
 python -m part2.eval.run_eval --mode openai_gpt4o_mini
-python -m part2.eval.run_eval --mode anthropic_claude_3_5_haiku
+python -m part2.eval.run_eval --mode openai_gpt4_1
 python -m part2.eval.run_eval --mode together_llama_3_1_70b
+python -m part2.eval.run_eval --mode ollama_qwen2_5_7b
 ```
 
 Outputs:
