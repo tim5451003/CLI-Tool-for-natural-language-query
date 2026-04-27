@@ -110,4 +110,4 @@ python wikidata_cli.py "cities in japan" --json
 
 ---
 
-Part 2 的 README 內容會放在 `part2` 資料夾中。
+Part 2 的 README(models_evaluation) 內容會放在 `part2` 資料夾中。
