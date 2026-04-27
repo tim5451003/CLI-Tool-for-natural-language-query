@@ -10,7 +10,43 @@
 
 ---
 
-## 1) Model Selection
+## 1) Data Generation Logic
+
+我的 data generation 邏輯不是追求「題目數量多」，而是追求「錯誤型態覆蓋完整」。
+
+設計原則：
+
+1. **先定能力邊界，再生題**
+   - 先列 baseline 預期支援的 query family（capital/population/head-of-state/top-N）。
+2. **再定風險面向**
+   - clean、typo/noisy、multilingual/mixed、ambiguous、underspecified、complex/contradiction。
+3. **最後定難度分層**
+   - easy / medium / hard 混合，避免模型只在單一難度看起來好。
+
+我把資料集當作「工程壓測集合」，不是語言生成 showcase。  
+目的很明確：讓每一次模型調整都能回答「它到底改善了哪種失敗」。
+
+---
+
+## 2) Ground Truth Logic
+
+ground truth 的核心是「可執行 schema」，而不是僅有語意摘要：
+
+- 每題對應一個結構化目標物件（含 `status` 與必要欄位）
+- 按 `status` 分欄位集合（`ok` / `needs_disambiguation` / `unsupported_or_underspecified` / `contradiction`）
+- strict scoring 以欄位對齊為主，tolerant scoring 補語意接近度
+
+關鍵工程取捨：
+
+1. **先保欄位定義一致，再談模型表現**
+2. **reason 字串若採 strict compare，需接受 wording 對分數的影響**
+3. **把「不確定性」也寫進 ground truth（例如 ambiguity 與 contradiction）**
+
+這讓評估結果可以直接回饋到 pipeline 設計，而不是只得到一個模糊總分。
+
+---
+
+## 3) Model Selection
 
 ### Qwen
 
@@ -51,7 +87,7 @@
 
 ---
 
-## 2) Performance Comparison
+## 4) Performance Comparison
 
 以下是目前最關鍵的可重現結果（30 題 benchmark）：
 
@@ -81,7 +117,7 @@
 
 ---
 
-## 3) Learnings: Eval Design & Ground Truth Engineering
+## 5) Learnings: Eval Design & Ground Truth Engineering
 
 ### A. Eval 設計
 
@@ -119,7 +155,7 @@
 
 ---
 
-## 4) Current Takeaway
+## 6) Current Takeaway
 
 在同一份 benchmark 上，三個模型都可以透過同樣的工程方法達到 `26/30`（>85%）。  
 真正可移植的能力不只是「模型換誰」，而是這套 human-engineered evaluation logic：

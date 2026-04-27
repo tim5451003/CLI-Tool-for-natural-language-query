@@ -23,6 +23,57 @@
 
 ---
 
+## Baseline Execution Logic
+
+Part 1 baseline 的執行邏輯是明確分層、可觀測的：
+
+1. **NL parse**：把自然語句轉成 `intent + slots`，先確立任務型態，再處理內容細節。
+2. **Entity resolution**：對 `entity_label` 做候選查找與排序，若有高歧義就標記為需要澄清。
+3. **SPARQL build**：依 intent 使用對應模板生成查詢，避免自由生成造成不可控查詢。
+4. **Query execution**：送到 Wikidata endpoint 執行，回傳結果後做格式化輸出。
+5. **Trace logging**：將 parse/resolution/query/result 寫入 log，確保每次行為可回放。
+
+這個 baseline 的設計重點是：**先保證 pipeline 正確與可解釋，再逐步擴增語意覆蓋**。
+
+---
+
+## Break-It Logic
+
+我的 break-it 不是隨機亂測，而是按風險優先級系統化壓測（可對照 `BREAK_IT_REPORT.md`）：
+
+1. **先立對照組**：先跑 in-scope 控制題，確保基線功能本身是通的。
+2. **再打 adversarial matrix**：分成 ambiguity、typo、mixed-language、underspecified、contradiction、comparative。
+3. **按傷害分級而非按錯誤數分級**：
+   - Critical：會自信輸出錯答案（例如 ambiguity 未揭露）
+   - Major：可修復意圖卻直接失敗（typo/mixed-language）
+   - Minor：超出 baseline 範圍但可改進提示
+4. **做 stage-level mapping**：把錯誤對應到 parse/resolution/validation/query 哪一層，避免盲修。
+
+break-it 的目標不是證明系統很爛，而是回答：  
+**「哪種錯最危險、應該先修哪裡，才符合工程現實？」**
+
+---
+
+## Harden & Fix Logic
+
+我採用的是「風險導向 hardening」，而非一次性大改：
+
+1. **先修 silent wrong answer（最高風險）**
+   - 加強 ambiguity detection，遇到高歧義優先要求澄清。
+2. **再修 recoverable intent**
+   - 加 typo / multilingual normalize（如 `capital de`, `poblacion`, 常見拼字錯）。
+3. **加入輸入一致性檢查**
+   - contradiction 檢查（例如語意互斥條件）。
+4. **補上 scope guard**
+   - 對 underspecified / unsupported 問題回傳明確狀態，而不是硬湊查詢。
+5. **維持可驗證迴圈**
+   - 每次 harden 後回跑 break-it matrix，確認修補有收益且不引入新回歸。
+
+這套修補邏輯的核心是：  
+**把不可避免的不確定性，轉成可解釋、可追蹤、可被人接手的系統行為。**
+
+---
+
 ## Setup
 
 ```bash
